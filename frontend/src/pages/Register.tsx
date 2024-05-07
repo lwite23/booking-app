@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
  export type RegisterFormData = {
     firstName: string,
@@ -11,21 +13,32 @@ import * as apiClient from "../api-client";
 }
 
 const Register = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const { showToast } = useAppContext();
 
-    const { register, watch, handleSubmit, formState:{ errors} } = useForm<RegisterFormData>();
+    const {
+        register,
+        watch,
+        handleSubmit,
+        formState: { errors },
+      } = useForm<RegisterFormData>();
+    
 
     const mutation = useMutation(apiClient.register, {
-        onSuccess:() => {
-            console.log("Регистрация успешна!");
+        onSuccess: async () => {
+            showToast({message: "Регистрация успешна!", type: "SUCCESS"});
+            await queryClient.invalidateQueries("validateToken")
+            navigate("/");
         },
         onError:(error: Error)=> {
-            console.log(error.message);
+            showToast({message: error.message, type: "ERROR"})
         },
     });
 
-    const onSubmit = handleSubmit((data) =>{
+    const onSubmit = handleSubmit((data) => {
         mutation.mutate(data);
-    });
+      });
 
     return ( <form className="flex flex-col gap-5" onSubmit={onSubmit}>
         <h2 className="text-3xl font-bold">Создать аккаунт</h2>
@@ -49,7 +62,8 @@ const Register = () => {
             } else if (watch("password") !== val){
                 return "Ваш пароль не совпадает";
             }
-        }})} ></input>{errors.confirmPassword && (
+        },
+    })} ></input>{errors.confirmPassword && (
             <span className="text-red-500">{errors.confirmPassword.message}</span>
         )}</label>
         <span>
