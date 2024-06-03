@@ -20,7 +20,7 @@ const SignOutButton = () => {
     }
 
     return(
-       <button onClick={handleClick} className="flex bg-white items-center hover:bg-gray-300 text-green-800 font-bold py-2 px-4 rounded-full">Выйти</button> 
+       <button onClick={handleClick} className="flex bg-white items-center hover:bg-gray-300 text-green-800 font-bold py-2 px-4 rounded-lg">Выйти</button> 
     );
 };
 

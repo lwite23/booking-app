@@ -40,36 +40,138 @@ const Register = () => {
         mutation.mutate(data);
       });
 
-    return ( <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-        <h2 className="text-3xl font-bold">Создать аккаунт</h2>
-        <div className="flex flex-col md:flex-row gap-5">
-            <label className="text-gray-700 text-sm font-bold flex-1">Имя <input className="border rounded w-full py-1 px-2 font-normal" {...register("firstName",{required: "Это поле является обязательным"})}></input>{errors.firstName && (
-                <span className="text-red-500">{errors.firstName.message}</span>
-            )}</label>
-            <label className="text-gray-700 text-sm font-bold flex-1">Фамилия <input className="border rounded w-full py-1 px-2 font-normal" {...register("lastName",{required: "Это поле является обязательным"})} ></input>{errors.lastName && (
-                <span className="text-red-500">{errors.lastName.message}</span>
-            )}</label>
+    return (
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Создайте аккаунт
+          </h2>
         </div>
-        <label className="text-gray-700 text-sm font-bold flex-1">Email <input type="email" className="border rounded w-full py-1 px-2 font-normal" {...register("email",{required: "Это поле является обязательным"})} ></input>{errors.email && (
-                <span className="text-red-500">{errors.email.message}</span>
-            )}</label>
-        <label className="text-gray-700 text-sm font-bold flex-1">Пароль <input type="password" className="border rounded w-full py-1 px-2 font-normal" {...register("password",{required: "Это поле является обязательным", minLength: {value:6, message: "Пароль должен содержать не менее 6 символов"}, })} ></input>{errors.password && (
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6" method="POST" onSubmit={onSubmit}>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Имя{" "}
+              </label>
+              <div className="mt-2">
+                <input
+                  className="indent-[2%] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("firstName", {
+                    required: "Это поле является обязательным",
+                  })}
+                ></input>
+                {errors.firstName && (
+                  <span className="text-red-500">
+                    {errors.firstName.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Фамилия{" "}
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  className="indent-[2%] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("lastName", {
+                    required: "Это поле является обязательным",
+                  })}
+                ></input>
+                {errors.lastName && (
+                  <span className="text-red-500">
+                    {errors.lastName.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Почта{" "}
+                </label>
+              </div>
+
+              <div className="mt-2">
+                <input
+                  type="email"
+                  className="indent-[2%] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("email", {
+                    required: "Это поле является обязательным",
+                  })}
+                ></input>
+                {errors.email && (
+                  <span className="text-red-500">{errors.email.message}</span>
+                )}
+              </div>
+            </div>
+            <div>
+                <div className="flex items-center justify-between">
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Пароль{" "}
+             
+            </label>
+            </div>
+            <div className="mt-2">
+            <input
+                type="password"
+                className="indent-[2%] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                {...register("password", {
+                  required: "Это поле является обязательным",
+                  minLength: {
+                    value: 6,
+                    message: "Пароль должен содержать не менее 6 символов",
+                  },
+                })}
+              ></input>
+              {errors.password && (
                 <span className="text-red-500">{errors.password.message}</span>
-            )}</label>
-        <label className="text-gray-700 text-sm font-bold flex-1">Подтверждение пароля <input type="password" className="border rounded w-full py-1 px-2 font-normal" {...register("confirmPassword",{validate:(val)=>{
-            if(!val){
-                return "Это поле является обязательным";
-            } else if (watch("password") !== val){
-                return "Ваш пароль не совпадает";
-            }
-        },
-    })} ></input>{errors.confirmPassword && (
-            <span className="text-red-500">{errors.confirmPassword.message}</span>
-        )}</label>
-        <span>
-            <button type="submit" className="bg-green-800 text-white p-2 font-bold hover:bg-green-700 text-xl rounded-full"> Создать аккаунт</button>
-        </span> 
-    </form>
+              )}
+            </div>
+            </div>
+            <div>
+                <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+              Подтверждение пароля{" "}
+              
+            </label>
+                </div>
+                <div className="mt-2">
+                <input
+                type="password"
+                className="indent-[2%] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                {...register("confirmPassword", {
+                  validate: (val) => {
+                    if (!val) {
+                      return "Это поле является обязательным";
+                    } else if (watch("password") !== val) {
+                      return "Ваш пароль не совпадает";
+                    }
+                  },
+                })}
+              ></input>
+              {errors.confirmPassword && (
+                <span className="text-red-500">
+                  {errors.confirmPassword.message}
+                </span>
+              )}
+                </div>
+           
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {" "}
+                Создать аккаунт
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     );
 
 };

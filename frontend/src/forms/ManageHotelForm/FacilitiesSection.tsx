@@ -10,7 +10,7 @@ const FacilitiesSection = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-3">Facilities</h2>
+      <h2 className="text-2xl font-bold mb-3">Удобства</h2>
       <div className="  grid grid-cols-5 gap-4">
         {hotelFacilities.map((facility) => (
           <label className="items-center text-sm flex gap-1 text-gray-700">
