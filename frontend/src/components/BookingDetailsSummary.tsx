@@ -30,7 +30,7 @@ const BookingDetailsSummary = ({
         <div className="flex justify-between">
           <div>
             Заезд
-            <div className="font-bold"> {checkIn.toLocaleDateString('ru-RU')}</div>
+            <div className="font-bold"> {checkIn.toLocaleDateString()}</div>
           </div>
           <div>
             Отъезд

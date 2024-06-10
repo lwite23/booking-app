@@ -28,6 +28,7 @@ const Detail = () => {
           ))}
         </span>
         <h1 className="text-3xl font-bold">{hotel.name}</h1>
+        <h2 className="text-xl">{hotel.country}, {hotel.city}</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -54,7 +55,7 @@ const Detail = () => {
         <div className="whitespace-pre-line">{hotel.description}</div>
         <div className="h-fit">
           <GuestInfoForm
-            pricePerNight={hotel.pricePerNight}
+            pricePerNight={hotel.pricePerNight} 
             hotelId={hotel._id}
           />
         </div>
